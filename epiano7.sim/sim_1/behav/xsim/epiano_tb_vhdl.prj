@@ -1,0 +1,16 @@
+# compile vhdl design source files
+vhdl xil_defaultlib  \
+"../../../../epiano7.srcs/sources_1/imports/epiano7/Code_converter.vhd" \
+"../../../../epiano7.srcs/sources_1/imports/epiano7/Control_Logic.vhd" \
+"../../../../epiano7.srcs/sources_1/imports/epiano7/RAM.vhd" \
+"../../../../epiano7.srcs/sources_1/imports/epiano7/RAM_Counter.vhd" \
+"../../../../epiano7.srcs/sources_1/imports/epiano7/TFF.vhd" \
+"../../../../epiano7.srcs/sources_1/imports/epiano7/UART_receiver.vhd" \
+"../../../../epiano7.srcs/sources_1/imports/epiano7/mod_m.vhd" \
+"../../../../epiano7.srcs/sources_1/imports/epiano7/mod_m_counter_TFF.vhd" \
+"../../../../epiano7.srcs/sources_1/imports/epiano7/timer.vhd" \
+"../../../../epiano7.srcs/sources_1/imports/epiano7/top_level.vhd" \
+"../../../../epiano7.srcs/sources_1/imports/epiano7/top_level_tb.vhd" \
+
+# Do not sort compile order
+nosort
