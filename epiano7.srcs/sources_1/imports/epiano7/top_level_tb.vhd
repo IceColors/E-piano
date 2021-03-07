@@ -1,16 +1,11 @@
-----------------------------------------------------------------------------------
--- 
--- 
-----------------------------------------------------------------------------------
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
-entity epiano_tb is
+entity top_level_tb is
    -- Port ();
-end epiano_tb;
+end top_level_tb;
 
-architecture arch of epiano_tb is
+architecture arch of top_level_tb is
 constant clk_period : time := 10 ns;
 constant bit_period : time := 52083ns; -- time for 1 bit.. 1bit/19200bps = 52.08 us
 
@@ -30,8 +25,6 @@ constant rx_data_ascii_g: std_logic_vector(7 downto 0) := x"67"; -- receive g
 constant rx_data_ascii_h: std_logic_vector(7 downto 0) := x"68"; -- receive h
 constant rx_data_ascii_j: std_logic_vector(7 downto 0) := x"6A"; -- receive j
 
-constant rx_data_ascii_enter: std_logic_vector(7 downto 0) := x"0D"; -- receive enter
-
 Component top_level
 Port ( clk, rst: in std_logic;
        rxd, play: in std_logic;
@@ -40,13 +33,13 @@ Port ( clk, rst: in std_logic;
 end Component;
 
 signal clk, rst: std_logic;
-signal rxd, play, ldspkr: std_logic;
+signal rxd, play, speaker: std_logic;
 
 begin
 
     uut: top_level
     Port Map(clk => clk, rst => rst, 
-             rxd => rxd, play => play, speaker => ldspkr);
+             rxd => rxd, play => play, speaker => speaker);
     
     clk_process: process 
             begin
@@ -63,41 +56,40 @@ begin
         wait for clk_period*2;
         rst <= '0';
         wait for clk_period*2;
-        
-        -- Test ASCII char q
-                rxd <= '0'; -- start bit = 0
-                wait for bit_period;
-                for i in 0 to 7 loop
-                    rxd <= rx_data_ascii_q(i);   -- 8 data bits
-                    wait for bit_period;
-                end loop;
-                rxd <= '1'; -- stop bit = 1
-                wait for 1ms;
-
-        -- Test ASCII char w
-                rxd <= '0'; -- start bit = 0
-                wait for bit_period;
-                for i in 0 to 7 loop
-                    rxd <= rx_data_ascii_w(i);   -- 8 data bits
-                    wait for bit_period;
-                end loop;
-                rxd <= '1'; -- stop bit = 1
-                wait for 1ms;
-        
---        -- Test ASCII char a
-                rxd <= '0'; -- start bit = 0
-                wait for bit_period;
-                for i in 0 to 7 loop
-                    rxd <= rx_data_ascii_a(i);   -- 8 data bits
-                    wait for bit_period;
-                end loop;
-                rxd <= '1'; -- stop bit = 1
-                wait for 1ms;
-        
                 
+                -- Q
+                rxd <= '0'; 
+                wait for bit_period;
+                for i in 0 to 7 loop
+                    rxd <= rx_data_ascii_q(i);  
+                    wait for bit_period;
+                end loop;
+                rxd <= '1'; 
+                wait for 1ms;
+                
+                -- W
+                rxd <= '0'; 
+                wait for bit_period;
+                for i in 0 to 7 loop
+                    rxd <= rx_data_ascii_w(i);
+                    wait for bit_period;
+                end loop;
+                rxd <= '1'; 
+                wait for 1ms;
+                
+                -- A
+                rxd <= '0'; 
+                wait for bit_period;
+                for i in 0 to 7 loop
+                    rxd <= rx_data_ascii_a(i);
+                    wait for bit_period;
+                end loop;
+                rxd <= '1';
+                wait for 1ms;
+                
+                -- and then play for playback from ram
                 play <= '1';
                 wait;
        
         end process;
-
 end arch;

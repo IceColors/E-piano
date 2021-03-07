@@ -1,6 +1,3 @@
--- Listing 11.1
--- Single-port RAM with synchronous read
--- Modified from XST 8.1i rams_07
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;

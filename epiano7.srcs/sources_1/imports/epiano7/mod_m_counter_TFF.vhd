@@ -1,40 +1,10 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 06.03.2021 16:42:48
--- Design Name: 
--- Module Name: mod_m_counter_TFF - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
-
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
 use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
 
 entity mod_m_counter_TFF is
 generic (
         N: integer := 18 -- num of bits
-        --M: integer := 326 ); -- mod-326 counter 
 );
     port ( 
         clk, rst:   in std_logic;
@@ -48,8 +18,8 @@ signal r_reg:   unsigned(N-1 downto 0);
 signal r_next:  unsigned(N-1 downto 0);
 signal q:       std_logic_vector(N-1 downto 0);
      
-----------------------------------------------------------------------------------
 begin
+
     -- register
     process(clk, rst) begin
         if (rst = '1') then

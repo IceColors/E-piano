@@ -1,41 +1,12 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 28.02.2021 13:22:36
--- Design Name: 
--- Module Name: UART_receiver - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
-
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
 use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
 
 entity UART_receiver is
 generic (
         DBIT: integer := 8; -- data bits
-        SB_TICK: integer := 16 ); -- ticks for stop bits
-
+        SB_TICK: integer := 16 
+        );
     Port ( 
         clk, rst, rx, from_s_tick: in std_logic;
         rx_done_tick : out std_logic;
@@ -49,11 +20,9 @@ signal s_reg, s_next : unsigned(3 downto 0);
 signal n_reg, n_next : unsigned(2 downto 0);
 signal b_reg, b_next : unsigned(7 downto 0);
  
-
 begin
 
-
--- State registers
+-- state registers
     process(clk, rst) begin
         if rst = '1' then
             state_reg <= idle;
@@ -77,14 +46,14 @@ begin
         b_next <= b_reg;
         rx_done_tick <= '0';
         case state_reg is 
-------------------------------------------------------------                
+       
             when idle =>
                 if rx='0' then
                     state_next <= start;
                     s_next <= (others=>'0');
                 -- else stay idle
                 end if;
-------------------------------------------------------------                
+             
             when start =>
                 if (from_s_tick = '1') then
                     if s_reg=7 then -- restart counter
@@ -95,7 +64,7 @@ begin
                         s_next <= s_reg+1;
                     end if;
                 end if;
-------------------------------------------------------------                
+                
             when data =>
                 if (from_s_tick = '1') then
                     if s_reg=15 then -- read RxD, feed its value to deserializer, restart counter
@@ -110,7 +79,7 @@ begin
                         s_next <= s_reg+1;
                     end if;
                 end if;
-------------------------------------------------------------
+
             when stop =>
                 if (from_s_tick = '1') then
                     if s_reg=(SB_TICK-1) then

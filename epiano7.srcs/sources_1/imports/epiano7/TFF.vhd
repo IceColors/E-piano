@@ -15,8 +15,6 @@ architecture Behavioral of TFF is
 
 begin
 
-
-
 process(clk, rst) 
 variable output : std_logic := '0';
 begin
@@ -30,7 +28,7 @@ begin
             output := not output;
         end if;
     end if;
-    
+   
     speaker <= output;
 end process;
 

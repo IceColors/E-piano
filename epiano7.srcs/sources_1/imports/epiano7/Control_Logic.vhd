@@ -34,7 +34,7 @@ process (rst, clk)
         end if;
     end process;
     
-process (clk, state_reg, play, uart_data, rx_done_tick, timer_done, ram_data)
+process (state_reg, play, uart_data, rx_done_tick, timer_done, ram_data)
     begin
         state_nxt <= state_reg;
         wr <= '0';
